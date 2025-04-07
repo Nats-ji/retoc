@@ -1,0 +1,24 @@
+name: Build and Upload retoc on Windows
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Rust
+        run: rustup update stable
+
+      - name: Build project
+        run: cargo build --release
+
+      - name: Upload compiled binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: retoc-windows-binary
+          path: target/release/retoc.exe
